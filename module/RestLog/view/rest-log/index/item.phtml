@@ -1,0 +1,90 @@
+<?php
+
+// within a view script
+$form = $this->form;
+$form->prepare();
+
+// Assuming the "contact/process" route exists...
+/*$form->setAttribute('action', $this->url('/application'));*/
+
+// Set attributes
+$form->setAttribute('action', $this->url($action));
+$form->setAttribute('method', 'post');
+
+// Get the form label plugin
+$formLabel = $this->plugin('formLabel');
+
+// Render the opening tag
+echo $this->form()->openTag($form);
+?>
+
+    <div class="form_element">
+        <?php
+            $hmackeyId = $form->get('hmackeyId');
+            echo $formLabel->openTag() . $hmackeyId->getOption('label') . " ";
+            echo $this->formInput($hmackeyId);
+            echo $this->formElementErrors($hmackeyId);
+            echo $this->formElementErrors($hmackeyId);
+            echo $formLabel->closeTag();
+        ?>
+    </div>
+
+    <div class="form_element">
+        <?php
+            $method = $form->get('method');
+            echo $formLabel->openTag() . $method->getOption('label') . " ";
+            echo $this->formSelect($method);
+            echo $this->formElementErrors($method);
+            echo $formLabel->closeTag();
+        ?>
+    </div>
+
+    <div class="form_element">
+        <?php
+            $uri = $form->get('uri');
+            echo $formLabel->openTag() . $uri->getOption('label') . " ";
+            echo $this->formInput($uri);
+            echo $this->formElementErrors($uri);
+            echo $formLabel->closeTag();
+        ?>
+    </div>
+
+    <div class="form_element">
+        <?php
+            $uri_parameters = $form->get('uriParameters');
+            echo $formLabel->openTag() . $uri_parameters->getOption('label') . " ";
+            echo $this->formInput($uri_parameters);
+            echo $this->formElementErrors($uri_parameters);
+            echo $formLabel->closeTag();
+        ?>
+    </div>
+
+
+    <div class="form_element">
+        <?php
+            $date = $form->get('date');
+            echo $formLabel->openTag() . $date->getOption('label') . " ";
+            echo $this->formInput($date);
+            echo $this->formElementErrors($date);
+            echo $formLabel->closeTag();
+        ?>
+    </div>
+
+    <?php
+        if (isset($id)) {
+            echo '<input name="id" type="hidden" value="'.$id.'">';
+        }
+
+        echo '<input name="action" type="hidden" value="'.$action.'">';
+    ?>
+
+
+
+    <?
+        echo '<input name="submit" type="submit" value="'.$action.'">';
+    ?>
+
+
+<?php echo $this->form()->closeTag()
+
+?>
