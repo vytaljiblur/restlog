@@ -20,32 +20,36 @@ class RsRestapicallhistoryLogicImpl {
 
     public function fetchAll()
     {
-        return $this->sm->get('RsRestapicallhistoryDao')->fetchAll();
+        return $this->getDao()->fetchAll();
     }
 
     public function fetchLastN($n) {
-        return $this->sm->get('RsRestapicallhistoryDao')->fetchLastN($n);
+        return $this->getDao()->fetchLastN($n);
     }
 
     public function fetchRow($id)
     {
-        return $this->sm->get('RsRestapicallhistoryDao')->fetchRow($id);
+        return $this->getDao()->fetchRow($id);
     }
 
 
     public function insert($item)
     {
-        $this->sm->get('RsRestapicallhistoryDao')->insert($item);
+        $this->getDao()->insert($item);
     }
 
     public function update($item)
     {
-        $this->sm->get('RsRestapicallhistoryDao')->update($item);
+        $this->getDao()->update($item);
     }
 
     public function remove($item)
     {
-        $this->sm->get('RsRestapicallhistoryDao')->remove($item);
+        $this->getDao()->remove($item);
+    }
+
+    private function getDao() {
+        return $this->sm->get('RsRestapicallhistoryDao');
     }
 
 

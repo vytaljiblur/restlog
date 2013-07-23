@@ -24,7 +24,6 @@ class RestLogControllerTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('RsRestapicallhistoryLogic', $this->getMock('RestLog\Logic\impl\RsRestapicallhistoryLogicImpl') );
 
         $this->controller = new IndexController();
@@ -58,6 +57,7 @@ class RestLogControllerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertInstanceOf('Zend\View\Model\ViewModel', $result);
     }
+
 
     
 

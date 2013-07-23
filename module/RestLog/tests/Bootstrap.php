@@ -39,8 +39,17 @@ class Bootstrap
                 'BjyProfiler',
                 'ZendDeveloperTools',
                 'DoctrineModule',
-                'DoctrineORMModule'
-            )
+                'DoctrineORMModule',
+                'PhlyRestfully'
+            ),
+            'service_manager' => array(
+                'factories' => array(
+                    'RestLog\Listener\RestLogResourceListener' => function ($services) {
+                        $persistence = $services->get('RsRestapicallhistoryDao');
+                        return new RestLogResourceListener($persistence);
+                    },
+                ),
+            ),
         );
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());

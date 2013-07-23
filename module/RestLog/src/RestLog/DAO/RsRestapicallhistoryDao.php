@@ -10,7 +10,7 @@
 namespace RestLog\DAO;
 
 
-interface GenericDao
+interface RsRestapicallhistoryDao
 {
     public function fetchRow($id);
     public function fetchAll();

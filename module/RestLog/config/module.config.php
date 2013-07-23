@@ -14,10 +14,10 @@ return array(
             'all_items' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/',
+                    'route' => '/',
                     'defaults' => array(
                         'controller' => 'RestLog\Component\Index',
-                        'action'     => 'index',
+                        'action' => 'index',
                     ),
                 ),
             ),
@@ -25,10 +25,10 @@ return array(
             'add' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/add',
+                    'route' => '/add',
                     'defaults' => array(
                         'controller' => 'RestLog\Component\Index',
-                        'action'     => 'item',
+                        'action' => 'item',
                     ),
                 ),
             ),
@@ -36,10 +36,10 @@ return array(
             'edit' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/edit',
+                    'route' => '/edit',
                     'defaults' => array(
                         'controller' => 'RestLog\Component\Index',
-                        'action'     => 'item',
+                        'action' => 'item',
                     ),
                 ),
             ),
@@ -47,14 +47,40 @@ return array(
             'remove' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route'    => '/remove',
+                    'route' => '/remove',
                     'defaults' => array(
                         'controller' => 'RestLog\Component\Index',
-                        'action'     => 'remove',
+                        'action' => 'remove',
                     ),
                 ),
             ),
 
+            'rest-log' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/api/v1.0.0/rest-log[/][:id]',
+                    'defaults' => array(
+                        'controller' => 'RestLog\ApiController'
+                    ),
+                ),
+            ),
+/*            'rest-log' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/api/v1.0.0/rest-log',
+                    'controller' => 'RestLog\ApiController', // for the web UI
+                ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'api' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '[/:id]',
+                            'controller' => 'RestLog\ApiController',
+                        ),
+                    ),
+                ),
+            ),*/
 
 
         ),
@@ -72,9 +98,9 @@ return array(
         'locale' => 'en_US',
         'translation_file_patterns' => array(
             array(
-                'type'     => 'gettext',
+                'type' => 'gettext',
                 'base_dir' => __DIR__ . '/../language',
-                'pattern'  => '%s.mo',
+                'pattern' => '%s.mo',
             ),
         ),
     ),
@@ -85,15 +111,15 @@ return array(
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
-        'display_exceptions'       => true,
-        'doctype'                  => 'HTML5',
-        'not_found_template'       => 'error/404',
-        'exception_template'       => 'error/index',
+        'display_exceptions' => true,
+        'doctype' => 'HTML5',
+        'not_found_template' => 'error/404',
+        'exception_template' => 'error/index',
         'template_map' => array(
-            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'layout/layout' => __DIR__ . '/../view/layout/layout.phtml',
             'restlog/index/index' => __DIR__ . '/../view/restlog/index/index.phtml',
-            'error/404'               => __DIR__ . '/../view/error/404.phtml',
-            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'error/404' => __DIR__ . '/../view/error/404.phtml',
+            'error/index' => __DIR__ . '/../view/error/index.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -110,12 +136,26 @@ return array(
             ),
             'orm_default' => array(
                 'drivers' => array(
-                    'RestLog\Entity' =>  'DB_driver'
+                    'RestLog\Entity' => 'DB_driver'
                 ),
             ),
         ),
     ),
 
+    'phlyrestfully' => array(
+        'resources' => array(
+            'RestLog\ApiController' => array(
+                'identifier' => 'RestLog',
+                'listener' => 'RestLog\Listener\RestLogResourceListener',
+                'resource_identifiers' => array('RestLogResource'),
+                'collection_http_options' => array('get', 'post'),
+                'collection_name' => 'rest-log',
+                'page_size' => 2,
+/*                'resource_http_options' => array('get', ''),*/
+                'route_name' => 'rest-log',
+            ),
+        ),
+    ),
 
 
 );

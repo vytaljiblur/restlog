@@ -10,6 +10,7 @@
 namespace RestLog;
 
 use RestLog\DAO\impl\RsRestapicallhistoryDaoImpl;
+use RestLog\Listener\RestLogResourceListener;
 use RestLog\Logic\impl\RsRestapicallhistoryLogicImpl;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
@@ -18,7 +19,7 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {
-        $eventManager        = $e->getApplication()->getEventManager();
+        $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
@@ -47,12 +48,16 @@ class Module
     {
         return array(
             'factories' => array(
-                'RsRestapicallhistoryDao' => function($sm) {
+                'RsRestapicallhistoryDao' => function ($sm) {
                     return new RsRestapicallhistoryDaoImpl($sm);
                 },
-                'RsRestapicallhistoryLogic' => function($sm) {
+                'RsRestapicallhistoryLogic' => function ($sm) {
                     return new RsRestapicallhistoryLogicImpl($sm);
-                }
+                },
+                'RestLog\Listener\RestLogResourceListener' => function ($services) {
+                    $persistence = $services->get('RsRestapicallhistoryDao');
+                    return new RestLogResourceListener($persistence);
+                },
             ),
         );
     }

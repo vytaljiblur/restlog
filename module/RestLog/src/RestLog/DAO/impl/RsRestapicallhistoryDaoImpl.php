@@ -9,19 +9,21 @@
 
 namespace RestLog\DAO\impl;
 
-use RestLog\DAO\GenericDao;
+use RestLog\DAO\RsRestapicallhistoryDao;
 use Doctrine\Tests\Common\Annotations\Null;
 
-class RsRestapicallhistoryDaoImpl implements GenericDao {
+class RsRestapicallhistoryDaoImpl implements RsRestapicallhistoryDao {
 
     private $entity_manager;
     private $service_manager;
     private $table_name = 'RestLog\Entity\RsRestapicallhistory';
 
-    function __construct($sm)
+    function __construct($sm = null)
     {
-        $this->service_manager = $sm->get('doctrine.entitymanager.orm_default');
-        $this->entity_manager = $sm->get('doctrine.entitymanager.orm_default')->getRepository($this->table_name);
+        if ($sm != null) {
+            $this->service_manager = $sm->get('doctrine.entitymanager.orm_default');
+            $this->entity_manager = $sm->get('doctrine.entitymanager.orm_default')->getRepository($this->table_name);
+        }
     }
 
     public function fetchRow($id)
