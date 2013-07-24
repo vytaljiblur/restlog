@@ -15,7 +15,7 @@ chdir(__DIR__);
  */
 class Bootstrap
 {
-    protected static $serviceManager;
+    public static $serviceManager;
 
     public static function init()
     {
@@ -50,10 +50,41 @@ class Bootstrap
                     },
                 ),
             ),
+            'phlyrestfully' => array(
+                'resources' => array(
+                    'RestLog\ApiController' => array(
+                        'identifier' => 'RestLog',
+                        'listener' => 'RestLog\Listener\RestLogResourceListener',
+                        'resource_identifiers' => array('RestLogResource'),
+                        'collection_http_options' => array('get', 'post'),
+                        'collection_name' => 'rest-log',
+                        'page_size' => 2,
+                        /*                'resource_http_options' => array('get', ''),*/
+                        'route_name' => 'rest-log',
+                    ),
+                ),
+            ),
+
+            'router' => array(
+                'routes' => array(
+                   'rest-log' => array(
+                        'type' => 'Segment',
+                        'options' => array(
+                            'route' => '/api/v1.0.0/rest-log[/][:id]',
+                            'defaults' => array(
+                                'controller' => 'RestLog\ApiController'
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+
         );
 
         $serviceManager = new ServiceManager(new ServiceManagerConfig());
         $serviceManager->setService('ApplicationConfig', $config);
+
+
         $serviceManager->get('ModuleManager')->loadModules();
         static::$serviceManager = $serviceManager;
     }
@@ -114,6 +145,7 @@ class Bootstrap
         }
         return $dir . '/' . $path;
     }
+
 }
 
 Bootstrap::init();

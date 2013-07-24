@@ -19,6 +19,8 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+
+
         $gets = $this->getRequest()->getQuery();
 
         $last_n = $gets['last_n'];
